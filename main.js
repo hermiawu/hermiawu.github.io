@@ -69,36 +69,42 @@ const routes = [
     {
         path: '',
         component: _layout_home_layout_home_layout_component__WEBPACK_IMPORTED_MODULE_2__["HomeLayoutComponent"],
-        canActivate: [_services_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
+        canActivate: [_services_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"], _services_web_resource_guard__WEBPACK_IMPORTED_MODULE_4__["ResourceGuard"]],
         children: [
             {
                 path: '',
                 component: _resize_window_resize_window_component__WEBPACK_IMPORTED_MODULE_14__["ResizeWindowComponent"],
+                canActivate: [_services_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"], _services_web_resource_guard__WEBPACK_IMPORTED_MODULE_4__["ResourceGuard"]],
                 data: { title: 'Home' }
             },
             {
                 path: 'home',
                 component: _home_home_component__WEBPACK_IMPORTED_MODULE_5__["HomeComponent"],
+                canActivate: [_services_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"], _services_web_resource_guard__WEBPACK_IMPORTED_MODULE_4__["ResourceGuard"]],
                 data: { title: 'Home' }
             },
             {
                 path: 'logout',
                 component: _logout_logout_component__WEBPACK_IMPORTED_MODULE_8__["LogoutComponent"],
+                canActivate: [_services_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"], _services_web_resource_guard__WEBPACK_IMPORTED_MODULE_4__["ResourceGuard"]],
                 data: { title: 'Logout' }
             },
             {
                 path: 'chat',
                 component: _chat_chat_component__WEBPACK_IMPORTED_MODULE_9__["ChatComponent"],
+                canActivate: [_services_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"], _services_web_resource_guard__WEBPACK_IMPORTED_MODULE_4__["ResourceGuard"]],
                 data: { title: 'Chat' }
             },
             {
                 path: 'board',
                 component: _info_board_info_board_component__WEBPACK_IMPORTED_MODULE_10__["InfoBoardComponent"],
+                canActivate: [_services_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"], _services_web_resource_guard__WEBPACK_IMPORTED_MODULE_4__["ResourceGuard"]],
                 data: { title: 'Info Board' }
             },
             {
                 path: 'roomate',
                 component: _roommate_list_roommate_list_component__WEBPACK_IMPORTED_MODULE_11__["RoommateListComponent"],
+                canActivate: [_services_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"], _services_web_resource_guard__WEBPACK_IMPORTED_MODULE_4__["ResourceGuard"]],
                 data: { title: 'Roomate List' }
             },
         ]
@@ -122,7 +128,7 @@ const routes = [
             {
                 path: 'setup',
                 component: _home_setup_home_setup_component__WEBPACK_IMPORTED_MODULE_12__["HomeSetupComponent"],
-                canActivate: [_services_web_resource_guard__WEBPACK_IMPORTED_MODULE_4__["ResourceGuard"]],
+                canActivate: [_services_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"], _services_web_resource_guard__WEBPACK_IMPORTED_MODULE_4__["ResourceGuard"]],
                 data: { title: 'Home Setup' }
             },
         ]
@@ -1474,15 +1480,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth.service */ "./src/app/services/auth/auth.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+
 
 
 
 class AuthGuard {
-    constructor(authService) {
+    constructor(authService, router) {
         this.authService = authService;
+        this.router = router;
     }
     canActivate(next, state) {
         if (!this.authService.isLogin) {
+            this.router.navigate(['/login']);
             return false;
         }
         else {
@@ -1490,14 +1500,14 @@ class AuthGuard {
         }
     }
 }
-AuthGuard.ɵfac = function AuthGuard_Factory(t) { return new (t || AuthGuard)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"])); };
+AuthGuard.ɵfac = function AuthGuard_Factory(t) { return new (t || AuthGuard)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
 AuthGuard.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: AuthGuard, factory: AuthGuard.ɵfac, providedIn: 'root' });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthGuard, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
         args: [{
                 providedIn: 'root'
             }]
-    }], function () { return [{ type: _auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"] }]; }, null); })();
+    }], function () { return [{ type: _auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }]; }, null); })();
 
 
 /***/ }),
@@ -1540,6 +1550,7 @@ class AuthService {
             email: email,
             tags: ['kind']
         };
+        this.isLogin = true;
     }
     getCurrentUser() {
         return this.signedUser;

@@ -47,6 +47,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _roommate_list_roommate_list_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./roommate-list/roommate-list.component */ "./src/app/roommate-list/roommate-list.component.ts");
 /* harmony import */ var _home_setup_home_setup_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./home-setup/home-setup.component */ "./src/app/home-setup/home-setup.component.ts");
 /* harmony import */ var _sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./sign-up/sign-up.component */ "./src/app/sign-up/sign-up.component.ts");
+/* harmony import */ var _resize_window_resize_window_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./resize-window/resize-window.component */ "./src/app/resize-window/resize-window.component.ts");
+
 
 
 
@@ -69,6 +71,11 @@ const routes = [
         component: _layout_home_layout_home_layout_component__WEBPACK_IMPORTED_MODULE_2__["HomeLayoutComponent"],
         canActivate: [_services_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
         children: [
+            {
+                path: '',
+                component: _resize_window_resize_window_component__WEBPACK_IMPORTED_MODULE_14__["ResizeWindowComponent"],
+                data: { title: 'Home' }
+            },
             {
                 path: 'home',
                 component: _home_home_component__WEBPACK_IMPORTED_MODULE_5__["HomeComponent"],
@@ -217,6 +224,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home_setup_home_setup_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./home-setup/home-setup.component */ "./src/app/home-setup/home-setup.component.ts");
 /* harmony import */ var _welcome_dialog_welcome_dialog_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./welcome-dialog/welcome-dialog.component */ "./src/app/welcome-dialog/welcome-dialog.component.ts");
 /* harmony import */ var _room_item_room_item_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./room-item/room-item.component */ "./src/app/room-item/room-item.component.ts");
+/* harmony import */ var _resize_window_resize_window_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./resize-window/resize-window.component */ "./src/app/resize-window/resize-window.component.ts");
+
 
 
 
@@ -280,7 +289,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
         _sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_25__["SignUpComponent"],
         _home_setup_home_setup_component__WEBPACK_IMPORTED_MODULE_26__["HomeSetupComponent"],
         _welcome_dialog_welcome_dialog_component__WEBPACK_IMPORTED_MODULE_27__["WelcomeDialogComponent"],
-        _room_item_room_item_component__WEBPACK_IMPORTED_MODULE_28__["RoomItemComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
+        _room_item_room_item_component__WEBPACK_IMPORTED_MODULE_28__["RoomItemComponent"],
+        _resize_window_resize_window_component__WEBPACK_IMPORTED_MODULE_29__["ResizeWindowComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"],
         _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_8__["BrowserAnimationsModule"], _angular_service_worker__WEBPACK_IMPORTED_MODULE_9__["ServiceWorkerModule"], _services_service_module__WEBPACK_IMPORTED_MODULE_2__["ServiceModule"],
         _material_material_module__WEBPACK_IMPORTED_MODULE_4__["MaterialModule"],
@@ -309,7 +319,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_25__["SignUpComponent"],
                     _home_setup_home_setup_component__WEBPACK_IMPORTED_MODULE_26__["HomeSetupComponent"],
                     _welcome_dialog_welcome_dialog_component__WEBPACK_IMPORTED_MODULE_27__["WelcomeDialogComponent"],
-                    _room_item_room_item_component__WEBPACK_IMPORTED_MODULE_28__["RoomItemComponent"]
+                    _room_item_room_item_component__WEBPACK_IMPORTED_MODULE_28__["RoomItemComponent"],
+                    _resize_window_resize_window_component__WEBPACK_IMPORTED_MODULE_29__["ResizeWindowComponent"]
                 ],
                 imports: [
                     _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -1288,6 +1299,39 @@ class Room {
         this.isBookable = false;
     }
 }
+
+
+/***/ }),
+
+/***/ "./src/app/resize-window/resize-window.component.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/resize-window/resize-window.component.ts ***!
+  \**********************************************************/
+/*! exports provided: ResizeWindowComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResizeWindowComponent", function() { return ResizeWindowComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+
+
+class ResizeWindowComponent {
+    constructor() { }
+    ngOnInit() {
+        window.open('https://hermiawu.github.io/', '', 'width=375 height=812');
+    }
+}
+ResizeWindowComponent.ɵfac = function ResizeWindowComponent_Factory(t) { return new (t || ResizeWindowComponent)(); };
+ResizeWindowComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ResizeWindowComponent, selectors: [["app-resize-window"]], decls: 0, vars: 0, template: function ResizeWindowComponent_Template(rf, ctx) { }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyZXNpemUtd2luZG93L3Jlc2l6ZS13aW5kb3cuY29tcG9uZW50LnNjc3MifQ== */"] });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ResizeWindowComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+        args: [{
+                selector: 'app-resize-window',
+                templateUrl: './resize-window.component.html',
+                styleUrls: ['./resize-window.component.scss']
+            }]
+    }], function () { return []; }, null); })();
 
 
 /***/ }),

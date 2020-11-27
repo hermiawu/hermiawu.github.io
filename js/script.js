@@ -1,11 +1,12 @@
-var scene, camera, renderer, vending, lights, composer;
+var scene, camera, renderer, vending, lights, composer, canvas;
 var controls, raycaster, clickableObj, mouse, intersects, intersected;
 var preModule, bestBuy, hmSo, book, contact ;
 
 init();
 
 function init(){
-    const canvas = document.querySelector('#c');
+  canvas = document.querySelector('#c');
+    
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0A1225);
   
@@ -13,7 +14,7 @@ function init(){
   camera.position.set(-0.026,1,6);
 
   renderer = new THREE.WebGLRenderer({canvas, antialias: true});
-  renderer.setSize( window.innerWidth, window.innerHeight );
+  //renderer.setSize( canvas.clientWidth, canvas.clientHeight );
   
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
@@ -229,7 +230,7 @@ lights.point = new THREE.PointLight(0xFFC02f, 2);
 //    scene.add(spotS3CamHelper);
   
    controls = new THREE.OrbitControls( camera, renderer.domElement );
-  controls.target.set(-0.026,1.2,0);
+   controls.target.set(-0.026,1.2,0);
   
     
     raycaster = new THREE.Raycaster();
@@ -243,7 +244,7 @@ lights.point = new THREE.PointLight(0xFFC02f, 2);
     
   //Load meshes here
     const loader = new THREE.GLTFLoader();
-  loader.load('https://uploads-ssl.webflow.com/5f91951e33e73451fff81a96/5fbefb2e234e05bac6ff15fb_vending_machine_model_min2.glb.txt', function(object){
+  loader.load('images/vending_machine_model_min2.glb', function(object){
     object.scene.traverse(function(child){
         if (child.isMesh){  
           child.castShadow = true;
@@ -261,12 +262,13 @@ lights.point = new THREE.PointLight(0xFFC02f, 2);
       book = object.scene.getObjectByName('book_red');
       contact = object.scene.getObjectByName('mailbox');
       
-      preModule.userData = {URL: "http://google.com"};
+      preModule.userData = {URL: "premodule.html"};
       //console.log(preModule.userData.URL);
-      bestBuy.userData = {URL: "http://google.com"};
-      hmSo.userData = {URL: "http://google.com"};
-      book.userData = {URL: "http://google.com"};
-      contact.userData = {URL: "http://google.com"};
+      bestBuy.userData = {URL: "#"};
+      hmSo.userData = {URL: "#"};
+      book.userData = {URL: "#"};
+      contact.userData = {URL: "#"};
+      
       
       clickableObj.push(preModule);
       clickableObj.push(bestBuy);
@@ -287,38 +289,67 @@ lights.point = new THREE.PointLight(0xFFC02f, 2);
     renderer.gammaFactor = 2.2;
     renderer.setClearColor(0x000000);
 
-  window.addEventListener( 'resize', resize, false);
+    //window.addEventListener( 'resize', resize, false);
     renderer.domElement.addEventListener('mousemove', onMouseMove, false);
     
     renderer.domElement.addEventListener('touchstart', onTouch,false);
     
   
   render();
+    requestAnimationFrame(render);
 
 }
+  
+function resizeRendererToDisplaySize(renderer) {
+    const canvas = renderer.domElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+  }
 
 
 function render(){
-    requestAnimationFrame(render);
-    controls.update();
+//    requestAnimationFrame(render);
+//    controls.update();
+//    renderer.render(scene, camera);
+    if (resizeRendererToDisplaySize(renderer)) {
+      const canvas = renderer.domElement;
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+    }
+    
     renderer.render(scene, camera);
-        
+    controls.update();
+    requestAnimationFrame(render);
 }
 
-function resize(){
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize( window.innerWidth, window.innerHeight );
-}
+//function resize(){
+//  camera.aspect = window.innerWidth / window.innerHeight;
+//  camera.updateProjectionMatrix();
+//  renderer.setSize( canvas.clientWidth, canvas.clientHeight );
+//}
 
 function getRelativePosition(event){
-    mouse.x = (event.clientX / renderer.domElement.clientWidth)*2 -1;
-    mouse.y = -(event.clientY / renderer.domElement.clientHeight)*2+1;
+    const rect = canvas.getBoundingClientRect();
+    return{
+        x:(event.clientX -rect.left)*canvas.width / rect.width,
+        y:(event.clientY - rect.top)*canvas.height / rect.height,
+    };
+}
+
+function setPickPosition(event){
+    const pos = getRelativePosition(event);
+    mouse.x = (pos.x / canvas.width)*2 -1;
+    mouse.y = -(pos.y / canvas.height)*2+1;
     raycaster.setFromCamera(mouse, camera);
 }
 
 function onMouseMove(event){
-    getRelativePosition(event);
+   setPickPosition(event);
     
     intersects = raycaster.intersectObjects(clickableObj, false);
     if (intersects.length>0){
@@ -355,7 +386,7 @@ function onMouseMove(event){
 function onTouch(event){
     //event.preventDefault();
     //controls.enabled = false; 
-    getRelativePosition(event.touches[0]);
+    setPickPosition(event.touches[0]);
     console.log(mouse);
     console.log(event);
     

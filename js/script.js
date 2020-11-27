@@ -267,7 +267,7 @@ lights.point = new THREE.PointLight(0xFFC02f, 2);
       bestBuy.userData = {URL: "#"};
       hmSo.userData = {URL: "#"};
       book.userData = {URL: "#"};
-      contact.userData = {URL: "#"};
+      contact.userData = {URL: "mailto:wuhao_9573@hotmail.com"};
       
       
       clickableObj.push(preModule);

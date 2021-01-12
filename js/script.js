@@ -265,7 +265,7 @@ lights.point = new THREE.PointLight(0xFFC02f, 2);
       preModule.userData = {URL: "premodule.html"};
       //console.log(preModule.userData.URL);
       bestBuy.userData = {URL: "bestbuy.html"};
-      hmSo.userData = {URL: "#"};
+      hmSo.userData = {URL: "hmso.html"};
       book.userData = {URL: "images/haowu_resume.pdf"};
       contact.userData = {URL: "mailto:wuhao_9573@hotmail.com"};
       
